@@ -16,10 +16,17 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        spinnerAge.setOnItemClickListener(this)
+        //spinnerAge.setOnItemClickListener(this)
 
         buttonCalculate.setOnClickListener {
             calculatePremium()
+        }
+
+        buttonReset.setOnClickListener {
+            spinnerAge.setSelection(0)
+            radioGroupGender.clearCheck()
+            checkBoxSmoker.isChecked = false
+            textViewPremium.text = getString(R.string.insurance_premium)
         }
     }
 
@@ -28,19 +35,71 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         val gender = radioGroupGender.checkedRadioButtonId
 
         var premium:Int = 0
-        var extraPaymentMale = 0
-        var extraPaymentSmoker = 0
+        var extraPaymentMale:Int = 0
+        var extraPaymentSmoker:Int = 0
 
-        if(position == 1){
+        if(position == 0){
             premium = 60
         }
+        else if(position == 1){
+            premium = 70
 
-        if(gender == R.id.radioButtonMale){
-            //TODO : calculate premium for male
+            if(gender == R.id.radioButtonMale){
+                extraPaymentMale = 50
+            }
+
+            if(checkBoxSmoker.isChecked){
+                extraPaymentSmoker = 100
+            }
+        }
+        else if(position == 2){
+            premium = 90
+
+            if(gender == R.id.radioButtonMale){
+                extraPaymentMale = 100
+            }
+
+            if(checkBoxSmoker.isChecked){
+                extraPaymentSmoker = 150
+            }
+        }
+        else if(position == 3){
+            premium = 120
+
+            if(gender == R.id.radioButtonMale){
+                extraPaymentMale = 150
+            }
+
+            if(checkBoxSmoker.isChecked){
+                extraPaymentSmoker = 200
+            }
+        }
+        else if(position == 4){
+            premium = 150
+
+            if(gender == R.id.radioButtonMale){
+                extraPaymentMale = 200
+            }
+
+            if(checkBoxSmoker.isChecked){
+                extraPaymentSmoker = 250
+            }
+        }
+        else if(position == 5){
+            premium = 150
+
+            if(gender == R.id.radioButtonMale){
+                extraPaymentMale = 200
+            }
+
+            if(checkBoxSmoker.isChecked){
+                extraPaymentSmoker = 300
+            }
         }
 
-        if(checkBoxSmoker.isChecked){
-            //TODO: calculate premium for smoker
-        }
+        //textViewPremium.text = "Premium : RM " + premium + "<br>" + "Extra payment for male : RM " + extraPaymentMale + "Extra payment for smoker: RM " + extraPaymentSmoker
+
+        textViewPremium.text = getString(R.string.insurance_premium) + " RM " + (premium + extraPaymentMale + extraPaymentSmoker)
+
     }
 }
